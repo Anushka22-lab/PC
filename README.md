@@ -55,3 +55,18 @@ python q3_kafka_consumer.py
 The consumer safely skips malformed records and retries temporary Kafka errors.
 Set `CPU_ALERT_THRESHOLD` to change the alert threshold or
 `KAFKA_CONSUMER_GROUP` to use a different consumer group.
+
+## Question 4: Airflow AIOps Workflow
+
+Install the dependencies and place the DAG where Airflow can discover it:
+
+```bash
+python -m pip install -r requirements.txt
+cp q4_airflow_aiops_dag.py "$AIRFLOW_HOME/dags/q4_airflow_aiops_dag.py"
+airflow dags list | grep aiops_monitoring_workflow
+```
+
+The DAG runs `collect_metrics >> process_metrics >> detect_anomaly >>
+generate_report` every five minutes, retries failed tasks twice by default,
+and uses XCom to pass metrics between tasks. Set `AIRFLOW_TASK_RETRIES`,
+`AIRFLOW_RETRY_DELAY_MINUTES`, and `CPU_ALERT_THRESHOLD` to configure it.
