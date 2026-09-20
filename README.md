@@ -70,3 +70,17 @@ The DAG runs `collect_metrics >> process_metrics >> detect_anomaly >>
 generate_report` every five minutes, retries failed tasks twice by default,
 and uses XCom to pass metrics between tasks. Set `AIRFLOW_TASK_RETRIES`,
 `AIRFLOW_RETRY_DELAY_MINUTES`, and `CPU_ALERT_THRESHOLD` to configure it.
+
+## Question 5: Integrated AIOps Monitor
+
+Run the integrated monitor after starting Kafka and publishing metrics:
+
+```bash
+python q5_integrated_aiops_monitor.py
+```
+
+It validates and processes Kafka records, alerts when CPU usage exceeds 80%,
+tracks running and final anomaly totals, and retries temporary Kafka failures.
+Use `CPU_ALERT_THRESHOLD`, `KAFKA_CONSUMER_GROUP`, and
+`KAFKA_CONNECTION_RETRIES` to configure the service. For a bounded local test,
+call `AIOpsMonitor().run(max_messages=10)` from Python.
