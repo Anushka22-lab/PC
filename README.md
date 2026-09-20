@@ -42,3 +42,16 @@ docker compose exec kafka kafka-console-consumer.sh \
 	--bootstrap-server localhost:29092 \
 	--topic server_metrics --from-beginning --max-messages 10
 ```
+
+## Question 3: Kafka Consumer
+
+Run the consumer in a separate terminal. It validates incoming JSON, logs each
+valid metric, and emits an alert when CPU usage is above 80%:
+
+```bash
+python q3_kafka_consumer.py
+```
+
+The consumer safely skips malformed records and retries temporary Kafka errors.
+Set `CPU_ALERT_THRESHOLD` to change the alert threshold or
+`KAFKA_CONSUMER_GROUP` to use a different consumer group.
